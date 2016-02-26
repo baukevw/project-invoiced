@@ -1,0 +1,53 @@
+<h1 class="page-header">Edit a client</h1>
+<%= form_for @client do |f| %>
+  <div class="well">
+    <div class="form-group">
+      <%= f.label :company_name %><br />
+      <%= f.text_field :company_name, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :client_number %><br />
+      <%= f.text_field :client_number, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :name %><br />
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :street %> & <%= f.label :number %><br />
+      <%= f.text_field :street %>
+      <%= f.text_field :number %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :zipcode %><br />
+      <%= f.text_field :zipcode, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :city %><br />
+      <%= f.text_field :city, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :url %><br />
+      <%= f.text_field :url, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :email %><br />
+      <%= f.text_field :email, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :phone %><br />
+      <%= f.text_field :phone, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.submit 'Submit', class: "btn btn-primary" %>
+    <%= link_to "Back", clients_path, class: "btn btn-default"  %>
+  </div>
+<% end %>

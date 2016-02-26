@@ -1,0 +1,92 @@
+<h1 class="page-header">View Invoice</h1>
+<div class="form-group">
+    <%= link_to "Back", invoices_path, class: "btn btn-default"  %>
+  </div>
+<div class="row">
+  <div class="well col-md-10 col-md-offset-1 invoice">
+    <div class="row">
+      <div class="col-md-9">
+        <div class="logo-area">
+          <%= image_tag @invoice.user.company_logo.web, class: 'logo img-responsive' %>
+        </div>
+        <table class="table table-condensed">
+          <tbody>
+            <tr>
+              <td>Invoice Date:</td><td><%= @invoice.date %></td>
+            </tr>
+            <tr>
+              <td> Invoice Number:</td><td><%= @invoice.number %></td>
+            </tr>
+            <tr>
+              <td>Client Number:</td><td><%= "%.6d" % @invoice.client.client_number %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-3 user-address">
+        <%= current_user.company_name %> <br>
+        <%= current_user.name %> <br>
+        <%= current_user.street %> <%= current_user.number %><br>
+        <%= current_user.zipcode %> <%= current_user.city %> <br>
+        <%= current_user.phone %> <br>
+        <%= current_user.email %> <br>
+        <%= current_user.url %> <br>
+        <%= current_user.bank_number %> <br>
+        <%= current_user.bank_name %> <br>
+        <%= current_user.fat_code %> <br>
+        <%= current_user.chambers %> <br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="addres-heading">
+        <%= @invoice.client.company_name if @invoice.client.company_name %> <br>
+        <%= @invoice.client.name %> <br>
+        <%= @invoice.client.street %> <%= @invoice.client.number %> <br>
+        <%= @invoice.client.zipcode %> <%= @invoice.client.city %> <br>
+      </div>
+    </div>
+    <div class="row">
+      <table class="table">
+        <thead>
+          <th>Description</th>
+          <th>Amount</th>
+          <th>Single Price<br>(excl. VAT)</th>
+          <th>Total Price<br>(incl. VAT)</th>
+        </thead>
+        <tbody>
+          <% @invoice.activities.each do |a| %>
+            <tr>
+              <td>
+                <%= a.description %>
+              </td>
+              <td>
+                <%= a.amount %>
+              </td>
+              <td>
+                <%= number_to_currency(a.price_ex_fat, unit: "€ ", separator: ",") %>
+              </td>
+              <td>
+                <%= price_incl_fat(a.price_ex_fat, a.amount, 21) %>
+              </td>
+            </tr>
+          <% end %>
+            <tr><td colspan="4"></td></tr>
+            <tr>
+              <td colspan="2"></td>
+              <td><b>VAT:</b></td>
+              <td><b><%= fat(@invoice) %>
+            </tr>
+            <tr>
+              <td colspan="2"></td>
+              <td><b>Total (Incl. VAT):</b></td>
+              <td><b><%= total(@invoice) %>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row">
+      <p class="payment-instructions center-block">
+        <%= current_user.payment_instructions %></div>
+      </p>
+  </div>
+</div>

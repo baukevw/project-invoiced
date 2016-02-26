@@ -1,0 +1,39 @@
+.invoice {
+  padding: 80px 60px;
+
+  .logo-area{
+
+    min-height:200px;
+
+    .logo {
+      max-width: 50%;
+    }
+  }
+
+  .table-condensed {
+
+    width: 40%;
+    td {
+      border: 0;
+      padding: 0;
+    }
+  }
+
+  .user-address {
+    text-align: right;
+  }
+
+  .addres-heading {
+    padding: 0 15px;
+  }
+
+  .payment-instructions {
+    font-size: 0.8em;
+    margin-top: 100px;
+    width: 60%;
+    text-align: center;
+    font-weight: bold;
+    font-style: italic;
+  }
+
+}

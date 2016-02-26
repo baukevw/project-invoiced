@@ -1,0 +1,68 @@
+<h1 class="page-header">Create a new invoice</h1>
+<%= form_for @invoice do |f| %>
+  <div class="well">
+    <div class="form-group">
+      <%= f.label :client_id %><br />
+      <%= f.collection_select(:client_id, @clients, :id, :select_option, {},
+                                      {class: 'form-control'}) %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :number, 'Invoice Number' %><br />
+      <%= f.text_field :number, value: generated_invoice_number, class: "form-control" %>
+    </div>
+
+    <%= f.label :date %><br />
+    <div class="input-group date"  id="datepicker">
+      <%= f.text_field :date, value: Time.now.strftime("%d-%m-%Y"), class: "form-control" %>
+      <span class="input-group-addon">
+        <span class="glyphicon glyphicon-calendar"></span>
+      </span>
+    </div>
+  </div>
+
+  <h3>Activities</h3>
+  <div class="panel panel-default">
+    <table class="table">
+      <thead>
+        <th>Description</th>
+        <th>Amount</th>
+        <th colspan="2">Price (Ex VAT)</th>
+      </thead>
+      <tbody>
+        <%= f.fields_for :activities, @activity do |a| %>
+          <tr>
+            <td class="col-md-7">
+              <%= a.text_field :description, class: "form-control", placeholder: 'Activity Description' %>
+            </td>
+            <td class="col-md-1">
+            <%= a.text_field :amount, class: "form-control", placeholder: 'Amount'  %>
+            </td>
+            <td class="col-md-2">
+              <%= a.text_field :price_ex_fat, class: "form-control", placeholder: 'Price (Ex. VAT)'  %>
+            </td>
+            <td class="col-md-2">
+              <%= link_to (content_tag :span, (), class: 'fa fa-remove fa-fw'), '#', class: 'btn btn-danger', id: 'remove' %>
+              <%= link_to (content_tag :span, (), class: 'fa fa-plus fa-fw'), '#', class: 'btn btn-success', id: 'add' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="panel-footer">
+
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.submit 'Submit', class: "btn btn-primary" %>
+    <%= link_to "Back", invoices_path, class: "btn btn-default"  %>
+  </div>
+
+  <script type="text/javascript">
+    $(function () {
+      $('#datepicker').datetimepicker({
+        format: "DD-MM-YYYY"
+      });
+    });
+  </script>
+<% end %>

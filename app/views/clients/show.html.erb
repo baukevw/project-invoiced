@@ -1,0 +1,15 @@
+<h1 class="page-header">Client Info</h1>
+<div class="panel panel-default">
+  <div class="panel-heading">Client info</div>
+  <div class="panel-body">
+    <%= @client.company_name %> <br>
+    <%= @client.name %> <br>
+    <%= @client.street %> <%= @client.number %> <br>
+    <%= @client.zipcode %> <%= @client.city %> <br>
+    <%= @client.phone %> <br>
+    <%= @client.email %> <br>
+    <%= @client.url %> <br>
+  </div>
+</div>
+<%= link_to "Back", clients_path, class: "btn btn-default"  %>
+
