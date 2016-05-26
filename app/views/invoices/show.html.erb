@@ -31,10 +31,10 @@
         <%= current_user.phone %> <br>
         <%= current_user.email %> <br>
         <%= current_user.url %> <br>
-        <%= current_user.bank_number %> <br>
-        <%= current_user.bank_name %> <br>
-        <%= current_user.fat_code %> <br>
-        <%= current_user.chambers %> <br>
+        Bank no: <%= current_user.bank_number %> <br>
+        Bank name: <%= current_user.bank_name %> <br>
+        VAT reg no: <%= current_user.fat_code %> <br>
+        Chambers no: <%= current_user.chambers %> <br>
       </div>
     </div>
     <div class="row">
@@ -51,7 +51,7 @@
           <th>Description</th>
           <th>Amount</th>
           <th>Single Price<br>(excl. VAT)</th>
-          <th>Total Price<br>(incl. VAT)</th>
+          <th>Total Price<br>(excl. VAT)</th>
         </thead>
         <tbody>
           <% @invoice.activities.each do |a| %>
@@ -66,20 +66,25 @@
                 <%= number_to_currency(a.price_ex_fat, unit: "€ ", separator: ",") %>
               </td>
               <td>
-                <%= price_incl_fat(a.price_ex_fat, a.amount, 21) %>
+                <%= number_to_currency(total_item_price_excl_vat(a.price_ex_fat, a.amount), unit: "€ ", separator: ",") %>
               </td>
             </tr>
           <% end %>
+            <tr>
+              <td colspan="2"></td>
+              <td><b>Total (Excl. VAT):</b></td>
+              <td><b><%= number_to_currency(total_price_excl_vat(@invoice), unit: "€ ", separator: ",")  %>
+            </tr>
             <tr><td colspan="4"></td></tr>
             <tr>
               <td colspan="2"></td>
               <td><b>VAT:</b></td>
-              <td><b><%= fat(@invoice) %>
+              <td><b><%= number_to_currency(vat(@invoice), unit: "€ ", separator: ",")  %>
             </tr>
             <tr>
               <td colspan="2"></td>
               <td><b>Total (Incl. VAT):</b></td>
-              <td><b><%= total(@invoice) %>
+              <td><b><%= number_to_currency(total_price_incl_vat(@invoice), unit: "€ ", separator: ",")  %>
             </tr>
         </tbody>
       </table>

@@ -9,17 +9,23 @@ module ApplicationHelper
     end
   end
 
-  def price_incl_fat(price, amount, fat)
-    sum = (fat.to_f + 100) / 100
-    total_price_ex = price * amount
-    number_to_currency(total_price_ex * sum, unit: "€ ", separator: ",")
+  def total_item_price_excl_vat(price, amount)
+    price * amount
   end
 
-  def fat(invoice)
-    number_to_currency(invoice.activities.sum(:price_ex_fat))
+  def total_price_excl_vat(invoice)
+    q = 0
+    invoice.activities.each do |i|
+      q += i.price_ex_fat * i.amount
+    end
+    q
   end
 
-  def total(invoice)
-    number_to_currency(invoice.activities.sum(:price_ex_fat))
+  def vat(invoice)
+    total_price_excl_vat(invoice) * 0.21
+  end
+
+  def total_price_incl_vat(invoice)
+    total_price_excl_vat(invoice) * 1.21
   end
 end
